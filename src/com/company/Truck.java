@@ -1,16 +1,16 @@
 package com.company;
 
 import java.awt.*;
-public class MainLabaClass {
+
+public class Truck extends Vehicle {
     //
-    private int _startPosX ;
-    private int _startPosY;
+    protected int _startPosX ;
+    protected int _startPosY;
     //
-    private int _pictureWidth;
-    private int _pictureHeight;
+
     //
-    private final int planeWidth = 150;
-    private final int planeHeight = 100;
+    protected final int truckWidth = 175;
+    protected final int truckHeight = 100;
     //
     private int MaxSpeed;
     private float Weight;
@@ -29,24 +29,19 @@ public class MainLabaClass {
         return DopColor;
     }
 
-
-    public MainLabaClass(int maxSpeed, float weight, Color mainColor, Color dopColor)
+    //
+    public Truck(int maxSpeed, float weight, Color mainColor, Color dopColor)
     {
 
-        MaxSpeed = 1000; //maxSpeed;
+        MaxSpeed = maxSpeed; //maxSpeed;
         Weight = weight;
         MainColor = mainColor;
         DopColor = dopColor;
     }
 
-    public void SetPosition(int x, int y, int width, int height)
-    {
-        _startPosX = x;
-        _startPosY = y;
-        _pictureWidth = width;
-        _pictureHeight = height;
-    }
+    //
 
+    @Override
     public void MoveTransport(Direction direction)
     {
         float step = MaxSpeed * 100 / Weight;
@@ -62,7 +57,7 @@ public class MainLabaClass {
             }
             case Right:
             {
-                if (_startPosX + step + planeWidth < _pictureWidth)
+                if (_startPosX + step + truckWidth < _pictureWidth)
                 {
                     _startPosX += step;
                 }
@@ -78,7 +73,7 @@ public class MainLabaClass {
             }
             case Down:
             {
-                if (_startPosY + step + planeHeight < _pictureHeight)
+                if (_startPosY + step + truckHeight < _pictureHeight)
                 {
                     _startPosY += step;
                 }
@@ -86,11 +81,11 @@ public class MainLabaClass {
             }
         }
     }
+
+
     public void DrawTruck(Graphics g)
     {
-
-        g.setColor(DopColor);
-        g.fillOval(_startPosX,_startPosY, 250, 100);
+        //
         g.setColor(MainColor);
         g.fillRect(_startPosX,_startPosY+90, 320, 50);
         g.fillRect(_startPosX+215, _startPosY, 50,115);
@@ -109,5 +104,8 @@ public class MainLabaClass {
         g.setColor(Color.ORANGE);
         g.fillRect(_startPosX+230, _startPosY-20, 20,20);
 
+
     }
+
+
 }
