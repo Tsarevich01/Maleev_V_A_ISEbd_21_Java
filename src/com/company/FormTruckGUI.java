@@ -1,125 +1,203 @@
 package com.company;
-import javax.swing.*;
-import java.awt.*;
-import java.util.Random;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class FormTruckGUI {
-    private Itruck truck;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
 
-    public JFrame frame;
-    private PanelForPaint panel;
+public class FormTruckGUI extends JFrame {
+
+    private JFrame frame;
+    private JPanel contentPane;
+    private Itruck trucktrailer;
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    FormTruckGUI frame = new FormTruckGUI();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Create the application.
+     */
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        try {
+            if (trucktrailer != null) {
+                trucktrailer.DrawTruck(g);
+            }
+        } catch (Exception ex) {
+
+        }
+    }
+
+    public void moveButton(JButton sender) {
+        try {
+            String name = sender.getToolTipText();
+            switch (name) {
+                case "Up":
+                    trucktrailer.MoveTransport(Direction.Up);
+                    break;
+                case "Down":
+                    trucktrailer.MoveTransport(Direction.Down);
+                    break;
+                case "Left":
+                    trucktrailer.MoveTransport(Direction.Left);
+                    break;
+                case "Right":
+                    trucktrailer.MoveTransport(Direction.Right);
+                    break;
+            }
+            this.repaint();
+        } catch (Exception ex) {
+            System.out.print("Iiii?aeun ia nicaai");
+        }
+    }
 
     public FormTruckGUI() {
         initialize();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(800, 100, 900, 500);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JButton buttonCreateTruck = new JButton(
+                "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0433\u0440\u0443\u0437\u043E\u0432\u0438\u043A");
+        buttonCreateTruck.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    trucktrailer = new Truck(100 + (int) (Math.random() * 300),
+                            1000 + (int) (Math.random() * 2000), Color.RED);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                try {
+                    trucktrailer.SetPosition(70 + (int) (Math.random() * 160),
+                            70 + (int) (Math.random() * 160),
+                            FormTruckGUI.this.getWidth(),
+                            FormTruckGUI.this.getHeight());
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                FormTruckGUI.this.repaint();
+            }
+        });
+        buttonCreateTruck.setBounds(12, 13, 170, 37);
+        contentPane.add(buttonCreateTruck);
+
+        JButton buttonUp = new JButton("");
+        buttonUp.setBackground(Color.WHITE);
+        buttonUp.setIcon(new ImageIcon(
+                "D:\\WindowsFormsCars\\src\\WindowsFormsCars\\up.jpg"));
+        buttonUp.setToolTipText("Up");
+        buttonUp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                moveButton(buttonUp);
+            }
+        });
+        buttonUp.setBounds(780, 347, 40, 40);
+        contentPane.add(buttonUp);
+
+        JButton buttonLeft = new JButton("");
+        buttonLeft.setBackground(Color.WHITE);
+        buttonLeft.setVerticalAlignment(SwingConstants.BOTTOM);
+        buttonLeft.setForeground(Color.BLACK);
+        buttonLeft.setIcon(new ImageIcon(
+                "D:\\WindowsFormsCars\\src\\WindowsFormsCars\\left.jpg"));
+        buttonLeft.setToolTipText("Left");
+
+        buttonLeft.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                moveButton(buttonLeft);
+            }
+        });
+        buttonLeft.setBounds(728, 400, 40, 40);
+        contentPane.add(buttonLeft);
+
+        JButton buttonDown = new JButton("");
+        buttonDown.setBackground(Color.WHITE);
+        buttonDown.setIcon(new ImageIcon(
+                "D:\\WindowsFormsCars\\src\\WindowsFormsCars\\down.jpg"));
+        buttonDown.setToolTipText("Down");
+        buttonDown.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                moveButton(buttonDown);
+            }
+        });
+        buttonDown.setBounds(780, 400, 40, 40);
+        contentPane.add(buttonDown);
+
+        JButton buttonRight = new JButton("");
+        buttonRight.setBackground(Color.WHITE);
+        buttonRight.setIcon(new ImageIcon(
+                "D:\\WindowsFormsCars\\src\\WindowsFormsCars\\right.jpg"));
+        buttonRight.setToolTipText("Right");
+        buttonRight.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                moveButton(buttonRight);
+            }
+        });
+        buttonRight.setBounds(830, 400, 40, 40);
+        contentPane.add(buttonRight);
+
+        JButton buttonCreateTruckTrailer = new JButton(
+                "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0433\u0440\u0443\u0437\u043E\u0432\u0438\u043A-\u043F\u043E\u043B\u0443\u043F\u0440\u0438\u0446\u0435\u043F");
+        buttonCreateTruckTrailer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    trucktrailer = new Benzovoz(100 + (int) (Math.random() * 300),
+                            1000 + (int) (Math.random() * 2000), Color.BLUE,
+                            Color.YELLOW);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                try {
+                    trucktrailer.SetPosition(70 + (int) (Math.random() * 160),
+                            70 + (int) (Math.random() * 160),
+                            FormTruckGUI.this.getWidth(),
+                            FormTruckGUI.this.getHeight());
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                FormTruckGUI.this.repaint();
+            }
+        });
+        buttonCreateTruckTrailer.setBounds(208, 13, 214, 37);
+        contentPane.add(buttonCreateTruckTrailer);
     }
 
+    /**
+     * Initialize the contents of the frame.
+     */
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 1000, 600);
+        frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-        JPanel first_panel = new JPanel();
-        frame.getContentPane().add(first_panel, BorderLayout.CENTER);
-        first_panel.setLayout(new BorderLayout(0, 0));
-
-        JPanel create_panel = new JPanel();
-        create_panel.setLayout(new BorderLayout(0,0));
-        first_panel.add(create_panel, BorderLayout.NORTH);
-
-        panel = new PanelForPaint(null);
-        first_panel.add(panel, BorderLayout.CENTER);
-
-        JPanel for_control_panel = new JPanel();
-        for_control_panel.setLayout(new BorderLayout(0,0));
-        first_panel.add(for_control_panel, BorderLayout.SOUTH);
-
-        JButton upgrade_button = new JButton();
-        upgrade_button.setText("Upgrade");
-        upgrade_button.addActionListener(e -> {
-            Random rnd = new Random();
-
-            truck = new Benzovoz(
-                    rnd.nextInt(200) + 100,
-                    rnd.nextInt(1000) + 1000,
-                    Color.RED,
-                    Color.BLACK);
-
-            truck.SetPosition(
-                    rnd.nextInt(90) + 10,
-                    rnd.nextInt(90) + 10,
-                    panel.getWidth(),
-                    panel.getHeight());
-
-            panel.setTruck(truck);
-            panel.repaint();
-        });
-        create_panel.add(upgrade_button, BorderLayout.EAST);
-
-        JButton create_button = new JButton();
-        String create_string = "Create";
-        create_button.setText(create_string);
-        create_button.addActionListener(e -> {
-            Random rnd = new Random();
-
-            truck = new Truck(
-                    rnd.nextInt(200) + 100,
-                    rnd.nextInt(1000) + 1000,
-                    Color.RED, Color.BLACK);
-
-            truck.SetPosition(
-                    rnd.nextInt(90) + 10,
-                    rnd.nextInt(90) + 10,
-                    panel.getWidth(),
-                    panel.getHeight());
-
-            panel.setTruck(truck);
-            panel.repaint();
-        });
-        create_panel.add(create_button, BorderLayout.WEST);
-
-        JPanel control_panel = new JPanel();
-        control_panel.setLayout(new GridLayout(2, 1));
-        for_control_panel.add(control_panel, BorderLayout.EAST);
-
-        JPanel up_control_panel = new JPanel();
-        up_control_panel.setLayout(new FlowLayout());
-        control_panel.add(up_control_panel);
-
-        JPanel down_control_panel = new JPanel();
-        down_control_panel.setLayout(new FlowLayout());
-        control_panel.add(down_control_panel);
-
-        JButton up_button = new JButton();
-        up_button.setText("\uD83E\uDC45");
-        up_button.addActionListener(e -> {
-            truck.MoveTransport(Direction.Up);
-            panel.repaint();
-        });
-        up_control_panel.add(up_button);
-
-        JButton left_button = new JButton();
-        left_button.setText("\uD83E\uDC44");
-        left_button.addActionListener(e -> {
-            truck.MoveTransport(Direction.Left);
-            panel.repaint();
-        });
-        down_control_panel.add(left_button);
-
-        JButton down_button = new JButton();
-        down_button.setText("\uD83E\uDC47");
-        down_button.addActionListener(e -> {
-            truck.MoveTransport(Direction.Down);
-            panel.repaint();
-        });
-        down_control_panel.add(down_button);
-
-        JButton right_button = new JButton();
-        right_button.setText("\uD83E\uDC46");
-        right_button.addActionListener(e -> {
-            truck.MoveTransport(Direction.Right);
-            panel.repaint();
-        });
-        down_control_panel.add(right_button);
     }
 }
