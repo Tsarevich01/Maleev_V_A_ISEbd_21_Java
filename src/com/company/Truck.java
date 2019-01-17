@@ -25,18 +25,16 @@ public class Truck extends Vehicle {
     public Color getMainColor() {
         return MainColor;
     }
-    public Color getDopColor() {
-        return DopColor;
-    }
+
 
     //
-    public Truck(int maxSpeed, float weight, Color mainColor, Color dopColor)
+    public Truck(int maxSpeed, float weight, Color mainColor)
     {
 
         MaxSpeed = maxSpeed; //maxSpeed;
         Weight = weight;
         MainColor = mainColor;
-        DopColor = dopColor;
+
     }
 
     //
