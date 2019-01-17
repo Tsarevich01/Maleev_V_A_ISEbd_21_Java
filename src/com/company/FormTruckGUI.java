@@ -1,122 +1,124 @@
 package com.company;
-
-import javafx.scene.control.skin.TextInputControlSkin;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
-public class FormTruckGUI
-{
-    public MainLabaClass plane;
+
+public class FormTruckGUI {
+    private Itruck truck;
+
     public JFrame frame;
-    private JPanel paint_panel;
+    private PanelForPaint panel;
 
     public FormTruckGUI() {
         initialize();
     }
-    private void Draw() {
-        paint_panel.repaint();
-    }
+
     private void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 100, 1000, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
         JPanel first_panel = new JPanel();
         frame.getContentPane().add(first_panel, BorderLayout.CENTER);
         first_panel.setLayout(new BorderLayout(0, 0));
-        // Create
+
         JPanel create_panel = new JPanel();
         create_panel.setLayout(new BorderLayout(0,0));
         first_panel.add(create_panel, BorderLayout.NORTH);
 
-        paint_panel = new PanelForPaint();
-        first_panel.add(paint_panel, BorderLayout.CENTER);
+        panel = new PanelForPaint(null);
+        first_panel.add(panel, BorderLayout.CENTER);
 
         JPanel for_control_panel = new JPanel();
         for_control_panel.setLayout(new BorderLayout(0,0));
         first_panel.add(for_control_panel, BorderLayout.SOUTH);
-        //
+
+        JButton upgrade_button = new JButton();
+        upgrade_button.setText("Upgrade");
+        upgrade_button.addActionListener(e -> {
+            Random rnd = new Random();
+
+            truck = new Benzovoz(
+                    rnd.nextInt(200) + 100,
+                    rnd.nextInt(1000) + 1000,
+                    Color.RED,
+                    Color.BLACK);
+
+            truck.SetPosition(
+                    rnd.nextInt(90) + 10,
+                    rnd.nextInt(90) + 10,
+                    panel.getWidth(),
+                    panel.getHeight());
+
+            panel.setTruck(truck);
+            panel.repaint();
+        });
+        create_panel.add(upgrade_button, BorderLayout.EAST);
+
         JButton create_button = new JButton();
         String create_string = "Create";
         create_button.setText(create_string);
-        create_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Random rnd = new Random();
-                plane = new MainLabaClass(rnd.nextInt(200) + 100, rnd.nextInt(1000) + 1000, Color.RED, Color.BLUE);
-                plane.SetPosition(rnd.nextInt(90) + 100, rnd.nextInt(90) + 100, paint_panel.getWidth(), paint_panel.getHeight());
-                Draw();
-            }
+        create_button.addActionListener(e -> {
+            Random rnd = new Random();
+
+            truck = new Truck(
+                    rnd.nextInt(200) + 100,
+                    rnd.nextInt(1000) + 1000,
+                    Color.RED, Color.BLACK);
+
+            truck.SetPosition(
+                    rnd.nextInt(90) + 10,
+                    rnd.nextInt(90) + 10,
+                    panel.getWidth(),
+                    panel.getHeight());
+
+            panel.setTruck(truck);
+            panel.repaint();
         });
         create_panel.add(create_button, BorderLayout.WEST);
-        //
+
         JPanel control_panel = new JPanel();
         control_panel.setLayout(new GridLayout(2, 1));
         for_control_panel.add(control_panel, BorderLayout.EAST);
-        // "Up"
+
         JPanel up_control_panel = new JPanel();
         up_control_panel.setLayout(new FlowLayout());
         control_panel.add(up_control_panel);
-        // "Left", "Down", "Right"
+
         JPanel down_control_panel = new JPanel();
         down_control_panel.setLayout(new FlowLayout());
         control_panel.add(down_control_panel);
-        //
-        int width_icon = 20;
-        int height_icon = 20;
-        ImageIcon up_icon = new ImageIcon("img/up.jpg");
-        Image up_image = up_icon.getImage().getScaledInstance(width_icon, height_icon, Image.SCALE_SMOOTH);
-        up_icon = new ImageIcon(up_image);
-        ImageIcon left_icon = new ImageIcon("img/left.jpg");
-        Image left_image = left_icon.getImage().getScaledInstance(width_icon, height_icon, Image.SCALE_SMOOTH);
-        left_icon = new ImageIcon(left_image);
-        ImageIcon down_icon = new ImageIcon("img/down.jpg");
-        Image down_image = down_icon.getImage().getScaledInstance(width_icon, height_icon, Image.SCALE_SMOOTH);
-        down_icon = new ImageIcon(down_image);
-        ImageIcon right_icon = new ImageIcon("img/right.png");
-        Image right_image = right_icon.getImage().getScaledInstance(width_icon, height_icon, Image.SCALE_SMOOTH);
-        right_icon = new ImageIcon(right_image);
-        //
+
         JButton up_button = new JButton();
-        up_button.setIcon(up_icon);
-        up_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                plane.MoveTransport(Direction.Up);
-                Draw();
-            }
+        up_button.setText("\uD83E\uDC45");
+        up_button.addActionListener(e -> {
+            truck.MoveTransport(Direction.Up);
+            panel.repaint();
         });
         up_control_panel.add(up_button);
+
         JButton left_button = new JButton();
-        left_button.setIcon(left_icon);
-        left_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                plane.MoveTransport(Direction.Left);
-                Draw();
-            }
+        left_button.setText("\uD83E\uDC44");
+        left_button.addActionListener(e -> {
+            truck.MoveTransport(Direction.Left);
+            panel.repaint();
         });
         down_control_panel.add(left_button);
+
         JButton down_button = new JButton();
-        down_button.setIcon(down_icon);
-        down_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                plane.MoveTransport(Direction.Down);
-                Draw();
-            }
+        down_button.setText("\uD83E\uDC47");
+        down_button.addActionListener(e -> {
+            truck.MoveTransport(Direction.Down);
+            panel.repaint();
         });
         down_control_panel.add(down_button);
+
         JButton right_button = new JButton();
-        right_button.setIcon(right_icon);
-        right_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                plane.MoveTransport(Direction.Right);
-                Draw();
-            }
+        right_button.setText("\uD83E\uDC46");
+        right_button.addActionListener(e -> {
+            truck.MoveTransport(Direction.Right);
+            panel.repaint();
         });
         down_control_panel.add(right_button);
     }
