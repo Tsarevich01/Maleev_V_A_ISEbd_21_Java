@@ -3,18 +3,30 @@ package com.company;
 import java.awt.*;
 public class Benzovoz extends Truck {
     //
-    private Color MainColor;
-    private Color DopColor;
+    public Color DopColor;// Äîïîëíèòåëüíûé öâåò
 
-    public Benzovoz(int maxSpeed, float weight, Color mainColor, Color dopColor) {
-        super(maxSpeed, weight, mainColor, dopColor);
+    public Color getDopColor() {
+        return DopColor;
+    }
+
+    public void setDopColor(Color value) {
+        DopColor = value;
+    }
+
+
+
+    public Benzovoz(int maxSpeed, float weight, Color mainColor,// Êîíñòðóêòîð
+                        Color dopColor) {
+        super(maxSpeed, weight, mainColor);
+        DopColor = dopColor;
+
     }
     public void DrawTruck(Graphics g)
     {
 
         g.setColor(DopColor);
         g.fillOval(_startPosX,_startPosY, 250, 100);
-        g.setColor(MainColor);
+        g.setColor(getMainColor());
         g.fillRect(_startPosX,_startPosY+90, 320, 50);
         g.fillRect(_startPosX+215, _startPosY, 50,115);
 
